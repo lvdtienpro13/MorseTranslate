@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morse Translate</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+        h2 {
+            color: #007bff;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+        input[type="text"] {
+            width: calc(100% - 80px);
+            padding: 10px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            width: 100%;
+        }
+        .note {
+            margin-top: 10px;
+            color: #555;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <h2>Morse Translate :3</h2>
+    <div class="container">
+        <input type="text" id="textInput" placeholder="Nhập mã Morse...">
+        <button id="sendButton">Dịch</button>
+        <div id="result"></div>
+        <p class="note">Note: _(tè): z, .(tíc): p</p>
+        <p class="note">vd: zp pz ppz = nau</p>
+    </div>
+    <div class="footer">
+        cre: Anh Nâu Đập Troai kk
+    </div>
+
+    <script>
+        // Chuyển đổi từ mã Morse sang văn bản
+        function morseToText(morse) {
+            var textCode = {
+                // Nhóm 1:
+                'p': 'e', 'z': 't',
+                'pp': 'i', 'zz': 'm',
+                'ppp': 's', 'zzz': 'o',
+                'pppp': 'h',
+                // Nhóm 2:
+                'pz': 'a', 'zp': 'n',
+                'ppz': 'u', 'zpp': 'd',
+                'pppz': 'v', 'zppp': 'b',
+                // Nhóm 3:
+                'ppzp': 'f', 'zpzp': 'l',
+                'zpz': 'r', 'zpzz': 'k',
+                'pzppz': 'p', 'zppz': 'x',
+                // Nhóm 4:
+                'zzp': 'g', 'pzz': 'w',
+                'zzpz': 'q', 'zpzpz': 'y',
+                // Nhóm 5:
+                'zpzp': 'c', 'zzpp': 'z',
+                'pzppp': 'j'
+            };
+
+            var words = morse.split(' ');
+            var text = '';
+            for (var i = 0; i < words.length; i++) {
+                if (textCode[words[i]]) {
+                    text += textCode[words[i]];
+                } else {
+                    text += '?'; // Ký tự không xác định
+                }
+            }
+            return text;
+        }
+
+        function convertMorse() {
+            var morseInputValue = document.getElementById("textInput").value;
+            var text = morseToText(morseInputValue);
+            document.getElementById("result").innerText = "Kết quả: " + text;
+        }
+
+        document.getElementById("sendButton").addEventListener("click", convertMorse);
+
+        document.getElementById("textInput").addEventListener("keydown", function(event) {
+            if (event.key === 'Enter') {
+                convertMorse();
+            }
+        });
+    </script>
+</body>
+</html>
